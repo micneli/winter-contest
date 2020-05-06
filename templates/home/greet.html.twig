@@ -1,1 +1,18 @@
-<h1>Hello User {{ name }}</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Welcome, {{ name }}
+{% endblock %}
+
+{% block body %}
+    <h1>Hello User {{ name }}</h1>
+    <hr>
+    Name: {{ person.name }}
+    <hr>
+    Last name: {{ person.lastname }}
+    <hr>
+    Age: {{ person.age }}
+
+    <h1>The user form</h1>
+    {{ form(first_form) }}
+{% endblock %}

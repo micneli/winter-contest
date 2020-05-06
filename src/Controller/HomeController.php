@@ -5,6 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 /**
  * @Route("/home", name="home")
@@ -40,9 +43,20 @@ class HomeController extends AbstractController
      */
     public function helloSecondUser(Request $request, $name)
     {
-        //request
+        $person = [
+            'name' => 'Joe',
+            'lastname' => 'Malin',
+            'age' => '44'
+        ];
+
+        $form = $this->createFormBuilder()
+            ->add('fullname', TextType::class)
+            ->getForm();
+
         return $this->render('home/greet.html.twig', [
-            'name' => $name
+            'name' => $name,
+            'person' => $person,
+            'first_form' => $form->createView()
         ]);
     }
 }
