@@ -6,10 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @Route("/home", name="home")
+ */
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/home", name="home")
+     * @Route("/index", name="index")
      */
     public function index()
     {
@@ -20,7 +23,7 @@ class HomeController extends AbstractController
 
     //first example of passing a parameter within the URL
     /**
-     * @Route("/helloFirstUser/{name}", name="hello_first_user")
+     * @Route("/helloFirstUser/{name?}", name="hello_first_user")
      */
     public function helloFirstUser(Request $request)
     {
@@ -35,7 +38,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/helloSecondUser/{name}", name="hello_second_user")
      */
-    public function helloSecondUser($name)
+    public function helloSecondUser(Request $request, $name)
     {
         //request
         return $this->render('home/greet.html.twig', [
