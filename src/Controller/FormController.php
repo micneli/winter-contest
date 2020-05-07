@@ -24,7 +24,7 @@ class FormController extends AbstractController
         //$em = $this->getDoctrine()->getManager();
         // $retrievedData = $em->getRepository(Post::class)->findOneBy([
         //     'id' => 1
-        // ]);
+        // ]); now it follows either persist or remove and flush
 
         /** we pass the data, either $post or $retrievedData, to the form */
         //$form = $this->createForm(PostType::class, $retrievedData);
@@ -34,10 +34,15 @@ class FormController extends AbstractController
             //'method' => 'GET'
         ]);
 
+        //var_dump($post); -- values are null
+
         $form->handleRequest($request);
+
+        //var_dump($post); -- values have been take from the form
 
         if($form->isSubmitted() && $form->isValid())
         {
+            //var_dump($post);
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();

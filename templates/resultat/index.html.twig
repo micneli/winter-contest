@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Resultat index{% endblock %}
+
+{% block body %}
+    <h1>Resultat index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Result1</th>
+                <th>Resultat2</th>
+                <th>Resultat_final</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for resultat in resultats %}
+            <tr>
+                <td>{{ resultat.id }}</td>
+                <td>{{ resultat.result1 ? resultat.result1|date('H:i:s') : '' }}</td>
+                <td>{{ resultat.resultat2 ? resultat.resultat2|date('H:i:s') : '' }}</td>
+                <td>{{ resultat.resultatFinal ? resultat.resultatFinal|date('H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('resultat_show', {'id': resultat.id}) }}">show</a>
+                    <a href="{{ path('resultat_edit', {'id': resultat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('resultat_new') }}">Create new</a>
+{% endblock %}
