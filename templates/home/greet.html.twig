@@ -18,8 +18,8 @@
 
     <h2>Only separate elements of the form</h2>
     {{ form_start(first_form) }}
-        {{ form_label(first_form.fullname) }}
-        {{ form_widget(first_form.fullname) }}
+        {# {{ form_label(first_form.fullname) }} #}
         {{ form_row(first_form.fullname) }}
+        {# {{ form_row(first_form.fullname) }} #}
     {{ form_end(first_form) }}
 {% endblock %}

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use App\Entity\Post;
 
 /**
  * @Route("/home", name="home")
@@ -48,6 +49,21 @@ class HomeController extends AbstractController
             'lastname' => 'Malin',
             'age' => '44'
         ];
+
+        /******* inserting data into the database ********/
+        $post = new Post(); // this is the entity
+        $post->setTitle('linux media');
+        $post->setDescription('Media for linux devices undergoing change');
+
+        // initiate Entity Manager to deal with the database
+        $em = $this->getDoctrine()->getManager();
+
+        // create sql query
+        $em->persist($post);
+
+        // execute sql query
+        $em->flush();
+        /******* END inserting data into the database ********/
 
         $form = $this->createFormBuilder()
             ->add('fullname', TextType::class)
