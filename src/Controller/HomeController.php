@@ -55,14 +55,19 @@ class HomeController extends AbstractController
         $post->setTitle('linux media');
         $post->setDescription('Media for linux devices undergoing change');
 
-        // initiate Entity Manager to deal with the database
+        // call Entity Manager to deal with the database
         $em = $this->getDoctrine()->getManager();
 
+        // retrieving from the db
+        $retrievedData = $em->getRepository(Post::class)->findOneBy([
+            'id' => 1
+        ]);
+
         // create sql query
-        $em->persist($post);
+        //$em->persist($post);
 
         // execute sql query
-        $em->flush();
+        //$em->flush();
         /******* END inserting data into the database ********/
 
         $form = $this->createFormBuilder()
@@ -72,6 +77,7 @@ class HomeController extends AbstractController
         return $this->render('home/greet.html.twig', [
             'name' => $name,
             'person' => $person,
+            'post' => $retrievedData,
             'first_form' => $form->createView()
         ]);
     }
