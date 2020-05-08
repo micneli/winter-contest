@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\PostType;
 use App\Entity\Post;
 use Symfony\Component\HttpFoundation\Request;
+use League\Csv\Reader;
 
 class FormController extends AbstractController
 {
@@ -61,6 +62,22 @@ class FormController extends AbstractController
             //$em->persist($post);
             //$em->flush();
         }
+
+        $reader = Reader::createFromPath('%kernel.root_dir%/../public/uploads/parcours_resultats.csv');
+
+        $results = $reader->fetchAssoc();
+
+        foreach ($results as $row) {
+            $result = (new Result())
+                ->setResult1($row['Resultat1'])
+                ->setResultat2($row['Resultat2'])
+            ;
+
+            $this->em->persist($result);
+
+        }
+
+        $this->em-flush();
 
         return $this->render('form/index.html.twig', [
             'controller_name' => 'FormController',
