@@ -41,11 +41,25 @@ class FormController extends AbstractController
         //var_dump($post); -- values have been take from the form
 
         if($form->isSubmitted() && $form->isValid())
-        {
-            //var_dump($post);
+        {  
+            //$file = $request->files->get('post')['my_file'];
+            $excelFile = $form->get('my_file')->getData();
+            $originalFilename = pathinfo($excelFile->getClientOriginalName(), PATHINFO_FILENAME);
+
+            $newFilename = $originalFilename . '.' . $excelFile->guessExtension();
+
+            $uploads_directory = $this->getParameter('uploads_directory');
+
+            $excelFile->move(
+                $uploads_directory,
+                $newFilename
+            );
+
+            // echo "<pre>";
+            // var_dump($newFilename); die;
             $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
-            $em->flush();
+            //$em->persist($post);
+            //$em->flush();
         }
 
         return $this->render('form/index.html.twig', [
