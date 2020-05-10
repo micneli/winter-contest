@@ -104,9 +104,8 @@ class FormController extends AbstractController
         $sql = '';
         for($row = 2; $row <= count($sheetData); $row++) {
             $xx = "'" . implode("','", $sheetData[$row]) . "'";
-            var_dump($xx);
-            $sql = "INSERT INTO resultat (resultat1, resultat2, resultat_final, nom, ville) VALUES ($xx); ";
-
+            //var_dump($xx);
+            $sql = "INSERT INTO resultat (participants_id, categories_id, competitions_id, resultat1, resultat2, resultat_final, nom, ville) VALUES ($xx); ";
         }
 
         if($conn->query($sql) === 'TRUE') {
