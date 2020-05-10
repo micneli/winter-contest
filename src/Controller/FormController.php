@@ -6,8 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\PostType;
 use App\Entity\Post;
+use App\Entity\Resultat;
 use Symfony\Component\HttpFoundation\Request;
 use League\Csv\Reader;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class FormController extends AbstractController
 {
@@ -62,22 +64,56 @@ class FormController extends AbstractController
             //$em->persist($post);
             //$em->flush();
         }
+        
+        /** Below is a League CSV solution */
+        // $reader = Reader::createFromPath('../public/uploads/parcours_resultats.csv')
+        //     ->setHeaderOffset(0);
+        // $results = $reader->getRecords();
+        // foreach ($results as $row) {
+        //     $result = (new Resultat())
+        //         ->setCompetitions($row['competitions_id'])
+        //         ->setResult1($row['result1'])
+        //         ->setResultat2($row['resultat2'])
+        //         ->setResultatFinal($row['resultat_final'])
+        //     ;
+        //     $this->em->persist($result);
+        // }
+        // $this->em-flush();
+        /** End of League CSV solution */
 
-        $reader = Reader::createFromPath('%kernel.root_dir%/../public/uploads/parcours_resultats.csv');
+        /** Below is a PHPSpreadsheet solution */
+        //require '../vendor/phpoffice/phpspreadsheet/samples/Header.php';
+        $inputFileType = 'Xlsx';
+        //$inputFileName = '../vendor/phpoffice/phpspreadsheet/samples/Reader/sampleData/example1.xls';
+        $inputFileName = '../public/uploads/parcours_resultats.xlsx';
 
-        $results = $reader->fetchAssoc();
+        //$helper->log('Loading file ' . pathinfo($inputFileName, PATHINFO_BASENAME) . ' using IOFactory with a defined reader type of ' . $inputFileType);
+        $reader = IOFactory::createReader($inputFileType);
+        //$helper->log('Turning Formatting off for Load');
+        $reader->setReadDataOnly(true);
+        $spreadsheet = $reader->load($inputFileName);
 
-        foreach ($results as $row) {
-            $result = (new Result())
-                ->setResult1($row['Resultat1'])
-                ->setResultat2($row['Resultat2'])
-            ;
+        $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
-            $this->em->persist($result);
+        var_dump($sheetData);
+
+        $conn = new \mysqli("localhost", "root", "", "winter-contest");
+        if($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+        $sql = '';
+        for($row = 2; $row <= count($sheetData); $row++) {
+            $xx = "'" . implode("','", $sheetData[$row]) . "'";
+            $sql = "INSERT INTO resultat (result1, resultat2, resultat_final) VALUES ($xx); ";
 
         }
 
-        $this->em-flush();
+        if($conn->query($sql) === 'TRUE') {
+            echo "Row $row inserted successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+        /** End of PHPSpreadsheet solution */
 
         return $this->render('form/index.html.twig', [
             'controller_name' => 'FormController',
