@@ -50,6 +50,16 @@ class Resultat
      */
     private $competitions;
 
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $ville;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +133,30 @@ class Resultat
     public function setCompetitions(?Competition $competitions): self
     {
         $this->competitions = $competitions;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?string $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }

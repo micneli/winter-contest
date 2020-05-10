@@ -95,7 +95,7 @@ class FormController extends AbstractController
 
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
-        var_dump($sheetData);
+        //var_dump($sheetData);
 
         $conn = new \mysqli("localhost", "root", "", "winter-contest");
         if($conn->connect_error) {
@@ -104,7 +104,8 @@ class FormController extends AbstractController
         $sql = '';
         for($row = 2; $row <= count($sheetData); $row++) {
             $xx = "'" . implode("','", $sheetData[$row]) . "'";
-            $sql = "INSERT INTO resultat (result1, resultat2, resultat_final) VALUES ($xx); ";
+            var_dump($xx);
+            $sql = "INSERT INTO resultat (resultat1, resultat2, resultat_final, nom, ville) VALUES ($xx); ";
 
         }
 
