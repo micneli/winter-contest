@@ -43,8 +43,13 @@ class ResultatRepositoryController extends AbstractController
 
         $resultats = $resultatGeneralHommesRepository->findResultatsGeneralHommes(); // the function findResultats() has to be declared within ResultatRepository.php
 
+        $message = [
+            'text_message' => 'Positions general hommes'
+        ];
+
         return $this->render("resultat_repository/resultats.html.twig", [
-            'resultats' => $resultats
+            'resultats' => $resultats,
+            'message' => $message
         ]);
     }
 
@@ -57,8 +62,13 @@ class ResultatRepositoryController extends AbstractController
 
         $resultats = $resultatGeneralFemmesRepository->findResultatsGeneralFemmes(); // the function findResultats() has to be declared within ResultatRepository.php
 
+        $message = [
+            'text_message' => 'Positions general femmes'
+        ];
+
         return $this->render("resultat_repository/resultats.html.twig", [
-            'resultats' => $resultats
+            'resultats' => $resultats,
+            'message' => $message
         ]);
     }
 }
