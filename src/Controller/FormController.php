@@ -69,6 +69,7 @@ class FormController extends AbstractController
         // $reader = Reader::createFromPath('../public/uploads/parcours_resultats.csv')
         //     ->setHeaderOffset(0);
         // $results = $reader->getRecords();
+        // var_dump($results);
         // foreach ($results as $row) {
         //     $result = (new Resultat())
         //         ->setCompetitions($row['competitions_id'])
@@ -103,8 +104,8 @@ class FormController extends AbstractController
             die("Connection failed: " . $conn->connect_error);
         }
         $sql = '';
-        var_dump(count($sheetData));
-        for($row = 2; $row <= count($sheetData); $row++) {
+        //var_dump(count($sheetData));
+        for($row = 1; $row <= count($sheetData); $row++) {
             $xx = "'" . implode("', '", $sheetData[$row]) . "'";
             //var_dump($xx);
             //$sql = "INSERT INTO resultat (participants_id, categories_id, competitions_id, resultat1, resultat2, resultat_final, nom, ville) VALUES ($xx); ";
