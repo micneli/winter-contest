@@ -1,0 +1,11 @@
+participants_id;categories_id;competitions_id;resultat1;resultat2;resultat_final;nom;ville
+1;3;1;00:50:05;01:50:00;01:50:00;Bea;Mulhouse
+2;3;1;01:00:00;01:40:00;01:40:00;Isa;Paris
+3;1;1;02:00:00;02:40:00;02:40:00;Thomas;Nantes
+4;1;1;03:00:00;03:40:00;03:40:00;Nebo;Marseille
+5;1;1;04:00:00;04:40:00;04:40:00;Victor;Nice
+6;1;1;05:00:00;05:40:00;05:40:00;Jerome;Bordeaux
+7;3;1;06:00:00;06:40:00;06:40:00;Maera;Lille
+8;2;1;07:00:00;07:40:00;07:40:00;Jojo;Lion
+9;2;1;08:00:00;08:40:00;08:40:00;Ilias;Tulouse
+10;3;1;09:00:00;09:40:00;09:40:00;Irina;Perpignan

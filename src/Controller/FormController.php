@@ -9,6 +9,7 @@ use App\Entity\Post;
 use App\Entity\Resultat;
 use Symfony\Component\HttpFoundation\Request;
 use League\Csv\Reader;
+use League\Csv\Statement;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class FormController extends AbstractController
@@ -41,15 +42,23 @@ class FormController extends AbstractController
 
         $form->handleRequest($request);
 
+        $image = 'championnat_ski.jpg';
+
         //var_dump($post); -- values have been take from the form
 
         if($form->isSubmitted() && $form->isValid())
         {  
             //$file = $request->files->get('post')['my_file'];
             $excelFile = $form->get('my_file')->getData();
+
+            //$fileExtension = substr($excelFile->getClientOriginalName(), -3); for csv files
+
+            //var_dump(pathinfo($excelFile, PATHINFO_EXTENSION));
+
             $originalFilename = pathinfo($excelFile->getClientOriginalName(), PATHINFO_FILENAME);
 
             $newFilename = $originalFilename . '.' . $excelFile->guessExtension();
+            //$newFilename = $originalFilename . '.' . $fileExtension; // for csv
 
             $uploads_directory = $this->getParameter('uploads_directory');
 
@@ -66,16 +75,21 @@ class FormController extends AbstractController
         }
         
         /** Below is a League CSV solution */
-        // $reader = Reader::createFromPath('../public/uploads/parcours_resultats.csv')
-        //     ->setHeaderOffset(0);
-        // $results = $reader->getRecords();
-        // var_dump($results);
-        // foreach ($results as $row) {
-        //     $result = (new Resultat())
+        //  $reader = Reader::createFromPath('../public/uploads/parcours_resultats.csv', 'r');
+        //  $reader->setHeaderOffset(0);
+        //$records = $reader->getRecords(['participants_id', 'categories_id', 'competitions_id', 'resultat1', 'resultat2', 'resultat_final', 'nom', 'ville']);
+        //  var_dump($reader);
+        //  $resultat = new Resultat();
+        // foreach ($reader as $row) {
+        //     $result = $resultat
+        //         ->setParticipants($row['participants_id'])
+        //         ->setCategories($row['categories_id'])
         //         ->setCompetitions($row['competitions_id'])
-        //         ->setResult1($row['result1'])
+        //         ->setResultat1($row['resultat1'])
         //         ->setResultat2($row['resultat2'])
         //         ->setResultatFinal($row['resultat_final'])
+        //         ->setNom($row['nom'])
+        //         ->setVille($row['ville'])
         //     ;
         //     $this->em->persist($result);
         // }
@@ -107,10 +121,10 @@ class FormController extends AbstractController
         //var_dump(count($sheetData));
         for($row = 1; $row <= count($sheetData); $row++) {
             $xx = "'" . implode("', '", $sheetData[$row]) . "'";
-            //var_dump($xx);
-            //$sql = "INSERT INTO resultat (participants_id, categories_id, competitions_id, resultat1, resultat2, resultat_final, nom, ville) VALUES ($xx); ";
-            $sql = "INSERT INTO participant (nom_participant, prenom_participant, sexe, image, email, ville) VALUES ($xx);";
-        }
+        //var_dump($xx);
+        //$sql = "INSERT INTO resultat (participants_id, categories_id, competitions_id, resultat1, resultat2, resultat_final, nom, ville) VALUES ($xx); ";
+        $sql = "INSERT INTO participant (nom_participant, prenom_participant, sexe, image, email, ville) VALUES ($xx);";
+         }
 
         if($conn->query($sql) === 'TRUE') {
             echo "Row $row inserted successfully";

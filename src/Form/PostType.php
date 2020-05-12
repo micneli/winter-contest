@@ -39,9 +39,10 @@ class PostType extends AbstractType
                 //     new File([
                 //         'maxSize' => '1024k',
                 //         'mimeTypes' => [
-                //             'application/xlsx',
+                //             'application/csv',
+                //             'application/x-csv'
                 //         ],
-                //         'mimeTypesMessage' => 'Please upload a valid Excel document',
+                //         'mimeTypesMessage' => 'Please upload a valid CSV document',
                 //     ])
                 // ],
             ])
