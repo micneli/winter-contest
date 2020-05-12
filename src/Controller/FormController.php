@@ -42,7 +42,7 @@ class FormController extends AbstractController
 
         $form->handleRequest($request);
 
-        $image = 'championnat_ski.jpg';
+        //$image = 'championnat_ski.jpg';
 
         //var_dump($post); -- values have been take from the form
 
