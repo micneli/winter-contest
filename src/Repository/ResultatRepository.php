@@ -50,9 +50,9 @@ class ResultatRepository extends ServiceEntityRepository
 
     // public function findResultats() {
     //     return  $this->createQueryBuilder('r')
-    //         ->innerJoin('App\Entity\Participant', 'p', Join::WITH, 'p = r.participants_id')
-    //         ->innerJoin('App\Entity\Categorie', 'c', Join::WITH, 'c = r.categories_id')
-    //         ->innerJoin('App\Entity\Competition', 'o', Join::WITH, 'o = r.competitions_id')
+    //         ->innerJoin('App\Entity\Participant', 'p', \Doctrine\ORM\Query\Expr\Join::WITH, 'p.id = r.participants.id')
+    //         ->innerJoin('App\Entity\Categorie', 'c', \Doctrine\ORM\Query\Expr\Join::WITH, 'c.id = r.categories.id')
+    //         ->innerJoin('App\Entity\Competition', 'o', \Doctrine\ORM\Query\Expr\Join::WITH, 'o.id = r.competitions.id')
     //         ->getQuery()
     //         ->getResult()
     //     ;
