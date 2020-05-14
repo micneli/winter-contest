@@ -71,7 +71,7 @@ class ResultatRepository extends ServiceEntityRepository
     public function findResultatsGeneralHommes() {
         $connection = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie LIKE "%M" ';
+        $sql = 'SELECT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie LIKE "%M" ORDER BY r.resultat_final';
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -81,7 +81,7 @@ class ResultatRepository extends ServiceEntityRepository
     public function findResultatsGeneralFemmes() {
         $connection = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie LIKE "%F" ';
+        $sql = 'SELECT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie LIKE "%F" ORDER BY r.resultat_final';
 
         $statement = $connection->prepare($sql);
         $statement->execute();
