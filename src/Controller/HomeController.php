@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 use App\Entity\Post;
 
 /**
@@ -72,6 +74,10 @@ class HomeController extends AbstractController
 
         $form = $this->createFormBuilder()
             ->add('fullname', TextType::class)
+            ->add('my_file', FileType::class, [
+                'mapped' => false,
+                'required' => false,
+                'label' => 'Select the file to upload'])
             ->getForm();
 
         return $this->render('home/greet.html.twig', [

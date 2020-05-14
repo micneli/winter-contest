@@ -101,7 +101,7 @@ class FormController extends AbstractController
         $inputFileType = 'Xlsx';
         //$inputFileName = '../vendor/phpoffice/phpspreadsheet/samples/Reader/sampleData/example1.xls';
         //$inputFileName = '../public/uploads/parcours_resultats.xlsx';
-        $inputFileName = '../public/uploads/participants.xlsx';
+        $inputFileName = '../public/uploads/parcours_resultats.xlsx';
 
         //$helper->log('Loading file ' . pathinfo($inputFileName, PATHINFO_BASENAME) . ' using IOFactory with a defined reader type of ' . $inputFileType);
         $reader = IOFactory::createReader($inputFileType);
@@ -118,18 +118,18 @@ class FormController extends AbstractController
             die("Connection failed: " . $conn->connect_error);
         }
         $sql = '';
-        //var_dump(count($sheetData));
-        for($row = 1; $row <= count($sheetData); $row++) {
+        
+        for($row = 2; $row <= count($sheetData); $row++) {
             $xx = "'" . implode("', '", $sheetData[$row]) . "'";
         //var_dump($xx);
-        //$sql = "INSERT INTO resultat (participants_id, categories_id, competitions_id, resultat1, resultat2, resultat_final, nom, ville) VALUES ($xx); ";
-        $sql = "INSERT INTO participant (nom_participant, prenom_participant, sexe, image, email, ville) VALUES ($xx);";
-         }
+        $sql = "INSERT INTO resultat (participants_id, categories_id, competitions_id, resultat1, resultat2, resultat_final, nom, ville) VALUES ($xx); ";
+        //$sql = "INSERT INTO participant (nom_participant, prenom_participant, sexe, image, email, ville) VALUES ($xx);";
 
-        if($conn->query($sql) === 'TRUE') {
+        if($conn->query($sql) == 'TRUE') {
             echo "Row $row inserted successfully";
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
+        }
         }
         /** End of PHPSpreadsheet solution */
 
