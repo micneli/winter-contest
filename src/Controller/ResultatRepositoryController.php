@@ -30,7 +30,7 @@ class ResultatRepositoryController extends AbstractController
         $resultats = $resultatRepository->findResultats(); // the function findResultats() has to be declared within ResultatRepository.php
 
         $message = [
-            'text_message' => 'Positions general'
+            'text_message' => 'Résultats générales'
         ];
 
         return $this->render("resultat_repository/resultats.html.twig", [
@@ -49,7 +49,7 @@ class ResultatRepositoryController extends AbstractController
         $resultats = $resultatGeneralHommesRepository->findResultatsGeneralHommes(); // the function findResultats() has to be declared within ResultatRepository.php
 
         $message = [
-            'text_message' => 'Positions general hommes'
+            'text_message' => 'Résultats générales hommes'
         ];
 
         return $this->render("resultat_repository/resultats.html.twig", [
@@ -68,7 +68,45 @@ class ResultatRepositoryController extends AbstractController
         $resultats = $resultatGeneralFemmesRepository->findResultatsGeneralFemmes(); // the function findResultats() has to be declared within ResultatRepository.php
 
         $message = [
-            'text_message' => 'Positions general femmes'
+            'text_message' => 'Résultats générales femmes'
+        ];
+
+        return $this->render("resultat_repository/resultats.html.twig", [
+            'resultats' => $resultats,
+            'message' => $message
+        ]);
+    }
+
+    /**
+     * @Route("/resultat/M1M", name="resultat.M1M")
+     * @param ResultatRepository $resultatRepository
+     * @return |Symfony|Component|HttpFondation|Response
+     */
+    public function resultats_M1M (ResultatRepository $resultatM1M) {
+
+        $resultats = $resultatM1M->findResultatsM1M(); // the function findResultats() has to be declared within ResultatRepository.php
+
+        $message = [
+            'text_message' => 'Résultats de la categorie M1M'
+        ];
+
+        return $this->render("resultat_repository/resultats.html.twig", [
+            'resultats' => $resultats,
+            'message' => $message
+        ]);
+    }
+
+    /**
+     * @Route("/resultat/M1F", name="resultat.M1F")
+     * @param ResultatRepository $resultatRepository
+     * @return |Symfony|Component|HttpFondation|Response
+     */
+    public function resultats_M1F (ResultatRepository $resultatM1F) {
+
+        $resultats = $resultatM1F->findResultatsM1F(); // the function findResultats() has to be declared within ResultatRepository.php
+
+        $message = [
+            'text_message' => 'Résultats de la categorie M1F'
         ];
 
         return $this->render("resultat_repository/resultats.html.twig", [

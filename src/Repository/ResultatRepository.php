@@ -61,7 +61,7 @@ class ResultatRepository extends ServiceEntityRepository
     public function findResultats() {
         $connection = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id';
+        $sql = 'SELECT DISTINCT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id';
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -71,7 +71,7 @@ class ResultatRepository extends ServiceEntityRepository
     public function findResultatsGeneralHommes() {
         $connection = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie LIKE "%M" ORDER BY r.resultat_final';
+        $sql = 'SELECT DISTINCT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie LIKE "%M" ORDER BY r.resultat_final';
 
         $statement = $connection->prepare($sql);
         $statement->execute();
@@ -81,7 +81,27 @@ class ResultatRepository extends ServiceEntityRepository
     public function findResultatsGeneralFemmes() {
         $connection = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie LIKE "%F" ORDER BY r.resultat_final';
+        $sql = 'SELECT DISTINCT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie LIKE "%F" ORDER BY r.resultat_final';
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
+    public function findResultatsM1M() {
+        $connection = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT DISTINCT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie = "M1M" ORDER BY r.resultat_final LIMIT 3';
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+
+    public function findResultatsM1F() {
+        $connection = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT DISTINCT p.nom_participant, p.prenom_participant, p.ville, c.nom_categorie, r.resultat_final from participant p, categorie c, resultat r WHERE p.id = r.participants_id AND r.categories_id = c.id AND c.nom_categorie = "M1F" ORDER BY r.resultat_final LIMIT 3';
 
         $statement = $connection->prepare($sql);
         $statement->execute();

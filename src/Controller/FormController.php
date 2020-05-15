@@ -72,7 +72,7 @@ class FormController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             //$em->persist($post);
             //$em->flush();
-        }
+        // }
         
         /** Below is a League CSV solution */
         //  $reader = Reader::createFromPath('../public/uploads/parcours_resultats.csv', 'r');
@@ -131,6 +131,7 @@ class FormController extends AbstractController
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
         }
+    }
         /** End of PHPSpreadsheet solution */
 
         return $this->render('form/index.html.twig', [
